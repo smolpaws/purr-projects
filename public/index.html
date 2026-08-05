@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<base href="/skin/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Purr Projects</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%234ea1ff'%3E%3Ccircle cx='6' cy='10' r='2'/%3E%3Ccircle cx='10.5' cy='6.5' r='2'/%3E%3Ccircle cx='15.5' cy='6.5' r='2'/%3E%3Ccircle cx='18' cy='10' r='2'/%3E%3Cpath d='M12 12c-3 0-5 2.2-5 4.6 0 1.7 1.3 2.9 3 2.9.9 0 1.4-.4 2-.4s1.1.4 2 .4c1.7 0 3-1.2 3-2.9C17 14.2 15 12 12 12z'/%3E%3C/svg%3E">
+<style>
+  /* smolpaws palette — silver + glowing blue on deep slate. NO purple.
+     Base values come from skin.yaml (theme:) via /skin-api/theme.css, linked
+     after this block so host values win; hex fallbacks apply standalone. */
+  :root {
+    --bg: var(--oh-background, #0e1116);
+    --surface: var(--oh-surface, #151a21);
+    --surface-2: #1b222b;
+    --border: var(--oh-border, #26303b);
+    --text: var(--oh-text, #e8ecf1);
+    --muted: var(--oh-muted, #8a95a3);
+    --accent: var(--oh-accent, #4ea1ff);
+    --silver: #c0c0c0;
+    --silver-bright: #e8e8e8;
+    --danger: var(--oh-danger, #ff6b7f);
+    --warn: var(--oh-warning, #f5b942);
+    --ok: #4ad98a;
+    --radius: 14px; --radius-sm: 9px;
+    --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background:
+      radial-gradient(1100px 500px at 80% -10%, color-mix(in srgb, var(--accent) 10%, transparent), transparent 70%),
+      var(--bg);
+    color: var(--text); font: 14px/1.55 system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+  }
+  a { color: var(--accent); text-decoration: none; }
+
+  header {
+    display: flex; align-items: center; gap: 13px; padding: 16px 26px;
+    border-bottom: 1px solid var(--border); position: sticky; top: 0;
+    background: color-mix(in srgb, var(--bg) 86%, transparent);
+    backdrop-filter: blur(10px); z-index: 5;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; }
+  .brand svg { width: 30px; height: 30px; filter: drop-shadow(0 0 7px color-mix(in srgb, var(--accent) 55%, transparent)); }
+  .brand h1 { font-size: 17px; margin: 0; font-weight: 700; letter-spacing: -0.02em; }
+  .brand .sub { font-size: 12px; color: var(--muted); margin-top: 1px; }
+  header .spacer { flex: 1; }
+  .stat { font-size: 12px; color: var(--muted); }
+  .stat b { color: var(--text); font-weight: 650; }
+  .refresh {
+    font-size: 12px; color: var(--muted); background: none;
+    border: 1px solid var(--border); border-radius: 999px; padding: 6px 13px;
+    cursor: pointer;
+  }
+  .refresh:hover { color: var(--text); border-color: var(--accent); }
+
+  main { max-width: 1120px; margin: 0 auto; padding: 26px 22px 60px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 18px; }
+
+  .card {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: var(--radius); overflow: hidden; display: flex; flex-direction: column;
+  }
+  .card .top { padding: 16px 18px 12px; border-top: 3px solid var(--pcolor, var(--accent)); }
+  .card .ttl { display: flex; align-items: center; gap: 9px; }
+  .dot { width: 10px; height: 10px; border-radius: 3px; background: var(--pcolor, var(--accent));
+    box-shadow: 0 0 8px color-mix(in srgb, var(--pcolor, var(--accent)) 60%, transparent); flex: none; }
+  .card h2 { font-size: 15.5px; margin: 0; font-weight: 700; letter-spacing: -0.01em; }
+  .card .n { margin-left: auto; font-size: 12px; color: var(--muted);
+    background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; }
+  .card .blurb { color: var(--muted); font-size: 12.5px; margin: 8px 0 0; }
+
+  .list { padding: 6px 10px 12px; display: flex; flex-direction: column; gap: 2px;
+    max-height: 340px; overflow: auto; }
+  .conv {
+    display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: var(--radius-sm);
+    color: var(--text); font-size: 12.75px; line-height: 1.4;
+  }
+  .conv:hover { background: var(--surface-2); }
+  .conv .s { width: 7px; height: 7px; border-radius: 50%; flex: none; background: var(--muted); }
+  .conv .s.running { background: var(--accent); box-shadow: 0 0 6px var(--accent); }
+  .conv .s.finished { background: var(--ok); }
+  .conv .s.error { background: var(--danger); }
+  .conv .s.idle { background: var(--warn); }
+  .conv .txt { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .conv .ws { font-family: var(--mono); font-size: 10.5px; color: var(--muted); flex: none; }
+  .conv.empty { color: var(--muted); font-style: italic; }
+
+  .foot { text-align: center; color: var(--muted); font-size: 11.5px; margin-top: 30px; }
+  .err { background: color-mix(in srgb, var(--danger) 12%, transparent); border: 1px solid var(--danger);
+    color: var(--text); padding: 14px 16px; border-radius: var(--radius); margin-bottom: 18px; }
+  .paw { color: var(--silver); }
+</style>
+</head>
+<body>
+<header>
+  <div class="brand">
+    <svg viewBox="0 0 24 24" fill="var(--accent)" aria-hidden="true">
+      <circle cx="6" cy="10" r="2"/><circle cx="10.5" cy="6.5" r="2"/>
+      <circle cx="15.5" cy="6.5" r="2"/><circle cx="18" cy="10" r="2"/>
+      <path d="M12 12c-3 0-5 2.2-5 4.6 0 1.7 1.3 2.9 3 2.9.9 0 1.4-.4 2-.4s1.1.4 2 .4c1.7 0 3-1.2 3-2.9C17 14.2 15 12 12 12z"/>
+    </svg>
+    <div>
+      <h1>Purr Projects</h1>
+      <div class="sub">smolpaws' sibling agents, grouped by project <span class="paw">🐾</span></div>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="stat" id="stat"></div>
+  <button class="refresh" id="refresh">↻ Refresh</button>
+</header>
+
+<main>
+  <div id="content"><p style="color:var(--muted)">Loading the board…</p></div>
+  <div class="foot" id="foot"></div>
+</main>
+
+<script>
+const CANVAS_TAB = "/canvas"; // Canvas UI base for deep links
+
+function statusClass(s) {
+  s = (s || "").toLowerCase();
+  if (["running","finished","error","idle"].includes(s)) return s;
+  return "";
+}
+
+function convRow(c, canvasUrl) {
+  const href = `${CANVAS_TAB}/conversations/${encodeURIComponent(c.id)}`;
+  const ws = (c.workspace || "").replace(/^\/Users\/[^/]+/, "~");
+  const a = document.createElement("a");
+  a.className = "conv";
+  a.href = href;
+  a.target = "_top";
+  a.title = `${c.title}\n${c.status} · ${c.workspace}`;
+  a.innerHTML =
+    `<span class="s ${statusClass(c.status)}"></span>` +
+    `<span class="txt"></span>` +
+    (ws ? `<span class="ws"></span>` : "");
+  a.querySelector(".txt").textContent = c.title;
+  if (ws) a.querySelector(".ws").textContent = ws;
+  return a;
+}
+
+function projectCard(p, canvasUrl) {
+  const card = document.createElement("div");
+  card.className = "card";
+  card.style.setProperty("--pcolor", p.color || "var(--accent)");
+  const list = document.createElement("div");
+  list.className = "list";
+  if (!p.conversations.length) {
+    const e = document.createElement("div");
+    e.className = "conv empty";
+    e.textContent = "no conversations";
+    list.appendChild(e);
+  } else {
+    for (const c of p.conversations) list.appendChild(convRow(c, canvasUrl));
+  }
+  const top = document.createElement("div");
+  top.className = "top";
+  top.innerHTML =
+    `<div class="ttl"><span class="dot"></span><h2></h2><span class="n">${p.count}</span></div>` +
+    `<p class="blurb"></p>`;
+  top.querySelector("h2").textContent = p.name;
+  top.querySelector(".blurb").textContent = p.blurb;
+  card.appendChild(top);
+  card.appendChild(list);
+  return card;
+}
+
+async function load() {
+  const content = document.getElementById("content");
+  try {
+    const res = await fetch("api/board");
+    const d = await res.json();
+    if (d.error) throw new Error(d.error);
+    document.getElementById("stat").innerHTML =
+      `<b>${d.total}</b> conversations · <b>${d.projects.filter(p=>p.count).length}</b> projects`;
+    const grid = document.createElement("div");
+    grid.className = "grid";
+    for (const p of d.projects) grid.appendChild(projectCard(p, d.canvasUrl));
+    content.innerHTML = "";
+    content.appendChild(grid);
+    const personal = d.excludedPersonal
+      ? ` · ${d.excludedPersonal} personal hidden`
+      : "";
+    document.getElementById("foot").textContent =
+      `Generated ${new Date(d.generatedAt).toLocaleString()} · read-only view of the local agent-server${personal}`;
+  } catch (e) {
+    content.innerHTML = `<div class="err">Couldn't load the board: ${String(e.message || e)}<br>` +
+      `<span style="color:var(--muted)">Is the agent-server reachable and the session key set?</span></div>`;
+  }
+}
+
+document.getElementById("refresh").addEventListener("click", load);
+load();
+</script>
+</body>
+</html>

@@ -1,0 +1,9 @@
+{
+  "name": "purr-projects",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Agent Canvas skin: smolpaws' project board over the local agent-server conversations.",
+  "scripts": {
+    "start": "node server.js"
+  }
+}

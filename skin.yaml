@@ -1,0 +1,32 @@
+name: Purr Projects
+icon: layout-dashboard
+description: >-
+  smolpaws' project board — the sibling OpenHands agents that ran on this
+  Canvas, grouped into projects (Transpile, PR Reviews, Automations,
+  Agent-Canvas, SmolPaws, Misc). A read-only dashboard over the local
+  agent-server's conversations, with one-click "open in Canvas" deep links.
+screenshot: docs/screenshot.svg
+canvas_version: ">=1.8.0"
+
+# Whole-app theme. smolpaws palette: silver (#C0C0C0/#E8E8E8) + glowing blue
+# on a deep slate base. NO purple. Served back as CSS vars at
+# GET /skin-api/theme.css and linked from public/index.html.
+theme:
+  accent: "#4ea1ff"
+  background: "#0e1116"
+  surface: "#151a21"
+  text: "#e8ecf1"
+  muted: "#8a95a3"
+  border: "#26303b"
+  warning: "#f5b942"
+  danger: "#ff6b7f"
+
+# No external services needed — the board reads the host agent-server's own
+# conversation list. Nothing to configure at install time.
+secrets: []
+
+mcp_servers: {}
+
+skills: []
+
+# Automations ship in automations/ (definition + code per directory).
