@@ -6,7 +6,9 @@ this Canvas. It reads the host agent-server's conversations, sorts each into
 one of six hardcoded projects, and shows them as cards with one-click
 "open in Canvas" links.
 
-![screenshot](docs/screenshot.svg)
+![Purr Projects launch clip](docs/launch.gif)
+
+<sub>▶️ Full-quality [`docs/launch.mp4`](docs/launch.mp4) · static [`docs/screenshot.svg`](docs/screenshot.svg)</sub>
 
 ## The projects
 
