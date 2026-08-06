@@ -11,6 +11,42 @@
 
 const PROJECTS = [
   {
+    id: "reviews",
+    name: "PR Reviews",
+    blurb:
+      "Reviewing and merging upstream OpenHands PRs — analyze, merge main into, /codereview passes on software-agent-sdk and OpenHands.",
+    icon: "git-pull-request",
+    color: "#4ad98a",
+    match: [
+      "review",
+      "merge main into",
+      "/codereview",
+      "codereview-roasted",
+      "wdyt about this pr",
+      "analyze the pr",
+      "pull/",
+      "accept my pr",
+    ],
+  },
+  {
+    id: "canvas",
+    name: "Agent Canvas",
+    blurb:
+      "The Agent Canvas product itself: UI bugs, version checks, the LLM-profile screens, consent banner, canvas PRs and skins.",
+    icon: "monitor",
+    color: "#4ea1ff",
+    match: [
+      "agent-canvas",
+      "canvas",
+      "llm profile",
+      "llm profiles",
+      "consent banner",
+      "skin",
+      "automate tab",
+      "sidebar",
+    ],
+  },
+  {
     id: "transpile",
     name: "TypeScript Transpile",
     blurb:
@@ -33,24 +69,6 @@ const PROJECTS = [
     ],
   },
   {
-    id: "reviews",
-    name: "PR Reviews",
-    blurb:
-      "Reviewing and merging upstream OpenHands PRs — analyze, merge main into, /codereview passes on software-agent-sdk and OpenHands.",
-    icon: "git-pull-request",
-    color: "#4ad98a",
-    match: [
-      "review",
-      "merge main into",
-      "/codereview",
-      "codereview-roasted",
-      "wdyt about this pr",
-      "analyze the pr",
-      "pull/",
-      "accept my pr",
-    ],
-  },
-  {
     id: "automations",
     name: "Automations",
     blurb:
@@ -64,24 +82,6 @@ const PROJECTS = [
       "daily",
       "schedule",
       "cron",
-    ],
-  },
-  {
-    id: "canvas",
-    name: "Agent Canvas",
-    blurb:
-      "The Agent Canvas product itself: UI bugs, version checks, the LLM-profile screens, consent banner, canvas PRs and skins.",
-    icon: "monitor",
-    color: "#4ea1ff",
-    match: [
-      "agent-canvas",
-      "canvas",
-      "llm profile",
-      "llm profiles",
-      "consent banner",
-      "skin",
-      "automate tab",
-      "sidebar",
     ],
   },
   {
