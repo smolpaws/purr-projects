@@ -73,8 +73,9 @@
     background: var(--surface-2); border: 1px solid var(--border); border-radius: 999px; padding: 2px 9px; }
   .card .blurb { color: var(--muted); font-size: 12.5px; margin: 8px 0 0; }
 
+  /* Show ~5 conversation rows, then scroll for the rest (each row ≈ 34px). */
   .list { padding: 6px 10px 12px; display: flex; flex-direction: column; gap: 2px;
-    max-height: 340px; overflow: auto; }
+    max-height: 188px; overflow-y: auto; }
   .conv {
     display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: var(--radius-sm);
     color: var(--text); font-size: 12.75px; line-height: 1.4;
